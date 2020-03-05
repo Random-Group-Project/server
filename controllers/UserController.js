@@ -1,5 +1,6 @@
-const User = require('../models')
+const { User } = require('../models')
 const { OAuth2Client } = require('google-auth-library');
+const {  } = require('../helpers/bcrypt')
 
 class UserController {
   static login (req, res, next) {
@@ -7,6 +8,13 @@ class UserController {
   }
 
   static register (req, res, next) {
+    User.create({
+      email: req.body.email,
+      username: req.body.username,
+      password: req.body.password
+    })
+      .then(data => res.status(201).json({data}))
+      .catch(err => next(err))
 
   }
 
