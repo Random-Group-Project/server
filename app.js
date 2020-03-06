@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 app.use(cors())
 
-//routing and errHandler
+//routing and errHandler/
 app.use(routes)
 app.use(errHandler)
 

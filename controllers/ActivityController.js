@@ -21,7 +21,7 @@ class ActivityController {
       method: 'GET'
     })
       .then(({data}) => {
-        console.log(data, 69696969)
+        // console.log(data, 69696969)
         const GIPHY_KEY = process.env.GIPHY_KEY
         activity.name = data.activity
         let searchStr = data.activity.replace(/\s+/g, '+')
@@ -31,8 +31,8 @@ class ActivityController {
         })
       })
       .then(({data}) => {
-        console.log(data, 555555)
-        console.log(data.data[0].images.original.url,762348762)
+        // console.log(data, 555555)
+        // console.log(data.data[0].images.original.url,762348762)
         activity.gif_url = data.data[0].images.original.url
         return Activity.create(activity)
       })
