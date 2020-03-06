@@ -62,7 +62,6 @@ class UserController {
     let obj = {
       password: process.env.G_PASSWORD
     };
-    let newUser = false;
     //baru copy dari dokumentasi, tapi udah nambahin clientId
     const CLIENT_ID = process.env.CLIENT_ID;
     const client = new OAuth2Client(CLIENT_ID);
@@ -94,7 +93,7 @@ class UserController {
           return resGmail;
         } else {
           // email is not found, create a new account
-          newUser = true;
+          sendEmail(obj);
           return User.create(obj);
         }
       })
@@ -109,9 +108,6 @@ class UserController {
           username: resCreate.username,
           token
         });
-        if (newUser) {
-          // send email
-        }
       })
       .catch(next);
   }
