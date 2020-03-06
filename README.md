@@ -1,7 +1,6 @@
 ## RANDOM-ORGANIZER-SERVER
 
 **CREATE NEW USER**
-
 ----
   
 * **URL**
@@ -129,7 +128,6 @@
 ----
 
 **GOOGLE LOGIN**
-
 ----
   
 * **URL**
@@ -172,7 +170,7 @@
 
 ----
 
-**DISPLAY ALL ACTIVITIES**
+**LIST ACTIVITIES**
 ----
   
 * **URL**
@@ -202,28 +200,65 @@
   * **Code:** 200 <br />
     **Content:** 
     ```javascript
+    [
+      {
+        "id": 3,
+        "name": "Go to an escape room",
+        "gif_url": "https://media3.giphy.com/media/l0OWistc2HUjf6PKM/giphy.gif?cid=78d249f9fd967b41c0c420a945a4904eadb1b3cf35d8f048&rid=giphy.gif",
+        "UserId": 3,
+        "createdAt": "2020-03-06T08:10:30.134Z",
+        "updatedAt": "2020-03-06T08:10:30.134Z"
+      }
+    ]
+    ```
+
+* **Error Response:**
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ message: "Internal Server Error" }`
+
+----
+
+**GENERATE ACTIVITIES**
+----
+  
+* **URL**
+
+  `http://localhost:3000/activities/create`
+
+* **Method:**
+
+  `GET`
+  
+*  **URL Params**
+
+    None
+
+*  **URL headers**
+
+    **Required:**
+
+    `token=[string]`
+
+* **Data Params**
+
+    None
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ```javascript
     {
-      data: "data": [
-        {
-            id: 5,
-            title: "puasa full gk bolong bolong",
-            description: "puasa harus full jangan mampir ke warteg",
-            status: false,
-            due_date: "2020-03-03T16:35:19.171Z",
-            UserId: 5,
-            GroupId: null,
-            createdAt: "2020-03-03T16:35:19.171Z",
-            updatedAt: "2020-03-03T16:35:19.171Z",
-            User: {
-                id: 5,
-                username: "user",
-                email: "user@mail.com",
-                password: "$2a$10$xpb6EM68AqYdRAByKQ/cVeq4ritqH9EJIyNSxI52o0sIzklA9rY7q",
-                createdAt: "2020-03-03T16:35:19.141Z",
-                updatedAt: "2020-03-03T16:35:19.141Z"
-            }
+      "message": "Generate activity successful",
+      "newActivity": {
+          "id": 3,
+          "UserId": 3,
+          "name": "Go to an escape room",
+          "gif_url": "https://media3.giphy.com/media/l0OWistc2HUjf6PKM/giphy.gif?cid=78d249f9fd967b41c0c420a945a4904eadb1b3cf35d8f048&rid=giphy.gif",
+          "updatedAt": "2020-03-06T08:10:30.134Z",
+          "createdAt": "2020-03-06T08:10:30.134Z"
         }
-      ]
     }
     ```
 
