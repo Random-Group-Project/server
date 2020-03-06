@@ -18,11 +18,12 @@ class UserController {
             // check for password, return token if true
             let payload = {
               id: response.id,
-              email: req.body.email,
-              username: response.username
+              email: req.body.email
             };
+            let token = generateToken(payload);
             res.status(200).json({
-              token: generateToken(payload)
+              username: response.username,
+              token
             });
           } else {
             // wrong password
@@ -53,8 +54,11 @@ class UserController {
   }
 
   static gsignin(req, res, next) {
+    let obj = {
+      password: process.env.G_PASSWORD
+    };
     //baru copy dari dokumentasi, tapi udah nambahin clientId
-    const CLIENT_ID = process.env.CLIENT_ID_CLEAN;
+    const CLIENT_ID = process.env.CLIENT_ID;
     const client = new OAuth2Client(CLIENT_ID);
     const token = req.headers.token;
     // THIS IS WHERE YOU LEFT OFF YESTERDAY
@@ -68,7 +72,10 @@ class UserController {
       .then(ticket => {
         const payload = ticket.getPayload();
         // successfully obtained the ticket
-        gEmail = payload.email;
+        let gEmail = payload.email;
+        // catch user data
+        obj.email = gEmail;
+        obj.username = payload.name;
         // check whether email already exist or not
         return User.findOne({
           where: {
@@ -76,31 +83,26 @@ class UserController {
           }
         });
       })
-      .then(response => {
-        // console.log(response);
-        if (response) {
-          // email is found, straight to generating keys
-          let resPayload = {
-            id: response.id,
-            email: response.email,
-            username: response.username
-          };
-          res.status(200).json({
-            token: generateToken(resPayload)
-          });
+      .then(resGmail => {
+        if (resGmail) {
+          // email is found, proceeding to log in
+          return resGmail;
         } else {
-          // email is not found, registering first
-          return User.create({
-            email: gEmail,
-            username: process.env.G_USERNAME,
-            password: process.env.G_PASSWORD
-          });
+          // email is not found, create a new account
+          return User.create(obj);
         }
       })
       .then(resCreate => {
-        console.log(resCreate);
-        // email created, generating token
-        // res.status(200).generateToken()
+        // generate token
+        let payload = {
+          id: resCreate.id,
+          email: resCreate.email
+        };
+        let token = generateToken(payload);
+        res.status(200).json({
+          username: resCreate.username,
+          token
+        });
       })
       .catch(next);
   }
