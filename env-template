@@ -1,3 +1,7 @@
 PORT=3000
 SALT=10
+SECRET=secret
 CLIENT_ID=520284037707-1hj1j5of0m65ut0377spqh3sqq4h9iis.apps.googleusercontent.com
+G_PASSWORD="Default Password"
+RESTDB_KEY=3f6342eddf3379bf02e51c545134104fd382a
+GIPHY_KEY=JOLY37zshGP2iyPXvoXbw0Tfj94s7ZXb
