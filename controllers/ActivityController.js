@@ -35,8 +35,8 @@ class ActivityController {
         activity.git_url = giphy.data[0].images.original.url
         return Activity.create(activity)
       })
-      .then(() => {
-        res.status(201).json({ message: 'Generate activity successful' })
+      .then(newActivity => {
+        res.status(201).json({ message: 'Generate activity successful', newActivity })
       })
       .catch(next)
   }
