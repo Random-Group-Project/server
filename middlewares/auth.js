@@ -1,5 +1,5 @@
 const { verifyToken } = require('../helpers/jwt')
-const User = require('../models')
+const { User } = require('../models')
 
 module.exports = {
   authentication (req, res, next) {
@@ -7,7 +7,7 @@ module.exports = {
     try {
       const decoded = verifyToken(token)
       const id = decoded.id
-      User.findByPk(id)
+      User.findOne({where: {id}})   //findByPk(id)
         .then(user => {
           if (!user) throw {
             status: 401,
