@@ -1,6 +1,7 @@
 ## RANDOM-ORGANIZER-SERVER
 
 **CREATE NEW USER**
+
 ----
   
 * **URL**
@@ -128,6 +129,7 @@
 ----
 
 **GOOGLE LOGIN**
+
 ----
   
 * **URL**
@@ -169,3 +171,63 @@
     **Content:** `{ error : "Internal Server Error" }`
 
 ----
+
+**DISPLAY ALL ACTIVITIES**
+----
+  
+* **URL**
+
+  `http://localhost:3000/activities`
+
+* **Method:**
+
+  `GET`
+  
+*  **URL Params**
+
+    None
+
+*  **URL headers**
+
+    **Required:**
+
+    `token=[string]`
+
+* **Data Params**
+
+    None
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ```javascript
+    {
+      data: "data": [
+        {
+            id: 5,
+            title: "puasa full gk bolong bolong",
+            description: "puasa harus full jangan mampir ke warteg",
+            status: false,
+            due_date: "2020-03-03T16:35:19.171Z",
+            UserId: 5,
+            GroupId: null,
+            createdAt: "2020-03-03T16:35:19.171Z",
+            updatedAt: "2020-03-03T16:35:19.171Z",
+            User: {
+                id: 5,
+                username: "user",
+                email: "user@mail.com",
+                password: "$2a$10$xpb6EM68AqYdRAByKQ/cVeq4ritqH9EJIyNSxI52o0sIzklA9rY7q",
+                createdAt: "2020-03-03T16:35:19.141Z",
+                updatedAt: "2020-03-03T16:35:19.141Z"
+            }
+        }
+      ]
+    }
+    ```
+
+* **Error Response:**
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ message: "Internal Server Error" }`

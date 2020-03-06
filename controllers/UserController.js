@@ -53,7 +53,7 @@ class UserController {
       .then(data => {
         // send email
         sendEmail(data);
-        res.status(201).json({ data });
+        res.status(201).json({message: "SUCCESS!"});
       })
       .catch(err => next(err));
   }
