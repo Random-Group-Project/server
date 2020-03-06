@@ -2,6 +2,7 @@ const { User } = require("../models");
 const { OAuth2Client } = require("google-auth-library");
 const { compare } = require("../helpers/bcrypt");
 const { generateToken } = require("../helpers/jwt");
+const { sendEmail } = require("../helpers/sendEmail");
 
 class UserController {
   static login(req, res, next) {
@@ -49,7 +50,11 @@ class UserController {
       username: req.body.username,
       password: req.body.password
     })
-      .then(data => res.status(201).json({ data }))
+      .then(data => {
+        // send email
+        sendEmail(data);
+        res.status(201).json({ data });
+      })
       .catch(err => next(err));
   }
 
@@ -61,7 +66,6 @@ class UserController {
     const CLIENT_ID = process.env.CLIENT_ID;
     const client = new OAuth2Client(CLIENT_ID);
     const token = req.headers.token;
-    // THIS IS WHERE YOU LEFT OFF YESTERDAY
     client
       .verifyIdToken({
         idToken: token,
@@ -89,6 +93,7 @@ class UserController {
           return resGmail;
         } else {
           // email is not found, create a new account
+          sendEmail(obj);
           return User.create(obj);
         }
       })
